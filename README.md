@@ -1,30 +1,7 @@
-# React + TypeScript + Vite
+# Criador de email em lote
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![image](https://github.com/DevKayoS/create_email/assets/157029608/243463c4-d346-4dad-89ae-c04fda8ed4a9)
 
-Currently, two official plugins are available:
+###
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Esse projeto foi feito pensando na demora na criação de emails para novos colaboradores da empresa onde trabalho, mensalmente entram novos colaboradores para a empresa e o meu setor que é o TI de infraestrutura, tem que criar emails para esses novos colaboradores, porém o site onde fazemos isso demora muito para criar um por um, entretanto existe uma função onde podemos adicionar um excel em .csv, então pensando nisso fiz esse site onde podemos adicioanr o nome e o sobrenome da colaboradora e assim automaticamente ja vai ser criado o que devemos copiar e colar no site de criação o que vai otimizar muito o processo. Além disso, gera uma senha aleatória automaticamente ao criar um email.
