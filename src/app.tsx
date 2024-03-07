@@ -1,6 +1,7 @@
 import { Header } from "./components/header"
 import { Plus } from "lucide-react"
 import { FormEvent, useRef, useState, useEffect } from "react"
+import { Footer } from "./components/footer"
 
 
 
@@ -43,7 +44,7 @@ export function App() {
     e.preventDefault()
     
     const senhaAleatoria = gerarSenhaAleatoria();
-    const newText = `${name};${lastname};${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br;${senhaAleatoria}`
+    const newText = `${name};${lastname};${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br;${senhaAleatoria};exchange/basic5gb`
     
     
     setText((prevText) => prevText ? `${prevText}\n${newText}` : newText)
@@ -87,7 +88,10 @@ export function App() {
       ></textarea>
     </div>
 
-     
+    <div className="flex items-center justify-center mt-20">
+      <Footer/> 
+    </div>
+
     </div>
   )
 }
