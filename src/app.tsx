@@ -1,7 +1,8 @@
 import { Header } from "./components/header"
-import { Plus } from "lucide-react"
+import { Copy, Plus, Trash2Icon } from "lucide-react"
 import { FormEvent, useRef, useState, useEffect } from "react"
 import { Footer } from "./components/footer"
+import {Toaster, toast} from 'sonner'
 
 
 
@@ -17,24 +18,28 @@ export function App() {
 
 
   function gerarSenhaAleatoria() {
-    // Definindo os caracteres possíveis.
-    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|:"<>?';
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|"<>?';
     
-    // Determinando o tamanho da senha.
     const tamanhoSenha = 8;
     
-    // Variável para armazenar a senha.
     let senha = '';
-    
-    // Gerando a senha.
+  
     for (let i = 0; i < tamanhoSenha; i++) {
-      // Escolhendo um caractere aleatório dos possíveis e adicionando à senha.
       const indiceAleatorio = Math.floor(Math.random() * caracteres.length);
       senha += caracteres.charAt(indiceAleatorio);
     }
+
+    const haveUpperCase = /[A-Z]/.test(senha)
+    const haveLowerCase = /[a-z]/.test(senha)
+    const haverNumber = /[0-9]/.test(senha)
+    const haveSymbols = /[^A-Za-z0-9]/.test(senha)
+
+    if (haveUpperCase && haveLowerCase && haverNumber && haveSymbols ){
+      return senha
+    } else {
+      return gerarSenhaAleatoria()
+    }
     
-    // Retornando a senha gerada.
-    return senha;
   }
   
   // Salvando a senha gerada em uma variável.
@@ -52,14 +57,25 @@ export function App() {
     setLastname('')
   
   }
+
+  function copy(){
+    navigator.clipboard.writeText(text)
+    toast.success('Copiado com sucesso!')
+}
+
+function handleDelete(){
+  setText('')
+  toast.error('Texto apagado com sucesso!')
+}
  
   
 
   return (
     <div >
       <Header/>
-      <form onSubmit={addEmailHandler} className="bg-slate-300/30 rounded-md w-96 flex flex-col items-center justify-center  m-auto shadow-lg shadow-sky-950 space-y-10 mt-20 h-72 mb-20">
-        <h1 className=" text-2xl f">Por favor insira o nome:</h1>
+      <form onSubmit={addEmailHandler} 
+      className="h-80 bg-slate-400/25 rounded-md w-96 flex flex-col items-center justify-center  m-auto shadow-lg shadow-sky-950 space-y-10 mt-20  mb-20">
+        <h1 className=" text-3xl font-semibold text-black/70">Por favor insira o nome:</h1>
         <div className="flex flex-col space-y-8">
             <input 
               type="text" 
@@ -76,16 +92,30 @@ export function App() {
               onChange={(e)=> setLastname(e.target.value)}
               />
       </div>
-       <button type="submit" className="border-2 py-2 px-6 rounded-md border-sky-400 hover:bg-sky-400 flex shadow-lg shadow-sky-950 items-center justify-center gap-1"><Plus className="size-5"/> Adicionar</button>
+       <button 
+       type="submit" 
+       className="hover:bg-slate-950/60 text-2xl px-4 py-2 bg-slate-950/30 rounded-lg text-slate-50/80 shadow-md shadow-black flex items-center justify-center ">
+        <Plus className="size-5"/> Adicionar</button>
     </form>
 
-    <div className=" flex items-center justify-center ">
+    <div className=" flex flex-col items-center justify-center ">
       <textarea 
         className="w-[700px] h-72 rounded-md p-5 outline-none shadow-lg border-2 shadow-sky-950 bg-slate-300"
         ref={textAreaRef}
         value={text}
         onChange={(e)=> setText(e.target.value)}
       ></textarea>
+      <div className="flex gap-4 mt-8">
+      <Toaster richColors/>
+        <button 
+        onClick={handleDelete}
+        className="flex items-center gap-2 hover:bg-slate-950/60 text-2xl px-4 py-2 bg-slate-950/30 rounded-lg text-slate-50/80 shadow-md shadow-black">
+          <Trash2Icon/>Apagar</button>
+        <button 
+        onClick={copy}
+        className="flex items-center gap-2 hover:bg-slate-950/60 text-2xl px-4 py-2 bg-slate-950/30 rounded-lg text-slate-50/80 shadow-md shadow-black">
+          <Copy/> Copiar</button>
+      </div>
     </div>
 
     <div className="flex items-center justify-center mt-20">
