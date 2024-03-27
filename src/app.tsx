@@ -98,23 +98,23 @@ function handleDelete(){
         <Plus className="size-5"/> Adicionar</button>
     </form>
 
-    <div className=" flex flex-col items-center justify-center ">
+    <div className=" flex gap-3 justify-center ">
       <textarea 
         className="w-[700px] h-72 rounded-md p-5 outline-none shadow-lg border-2 shadow-sky-950 bg-slate-300"
         ref={textAreaRef}
         value={text}
         onChange={(e)=> setText(e.target.value)}
       ></textarea>
-      <div className="flex gap-4 mt-8">
+      <div className="flex flex-col gap-4 mt-8">
       <Toaster richColors/>
         <button 
         onClick={handleDelete}
         className="flex items-center gap-2 hover:bg-slate-950/60 text-2xl px-4 py-2 bg-slate-950/30 rounded-lg text-slate-50/80 shadow-md shadow-black">
-          <Trash2Icon/>Apagar</button>
+          <Trash2Icon/></button>
         <button 
         onClick={copy}
         className="flex items-center gap-2 hover:bg-slate-950/60 text-2xl px-4 py-2 bg-slate-950/30 rounded-lg text-slate-50/80 shadow-md shadow-black">
-          <Copy/> Copiar</button>
+          <Copy/> </button>
       </div>
     </div>
 
