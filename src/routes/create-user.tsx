@@ -89,7 +89,7 @@ function handleDelete(){
 
  <div className=" flex gap-3 justify-center ">
    <textarea 
-     className="w-[550px] h-96 rounded-md p-5 outline-none shadow-lg border-2 shadow-sky-950 bg-slate-300"
+     className="w-[650px] h-96 rounded-md p-5 outline-none shadow-lg border-2 shadow-sky-950 bg-slate-300"
 
      value={textUser}
      onChange={(e)=> setTextUser(e.target.value)}

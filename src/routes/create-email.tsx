@@ -3,6 +3,7 @@ import { useState,  useEffect, FormEvent} from "react";
 import { Toaster, toast } from "sonner";
 import { ButtonCopy } from "../components/ButtonCopy";
 import { ButtonTrash } from "../components/buttonTrash";
+// import axios from 'axios';
 
 export function CreateEmail(){
 
@@ -60,12 +61,31 @@ export function CreateEmail(){
   function copy(){
     navigator.clipboard.writeText(text)
     toast.success('Copiado com sucesso!')
+    
 }
 
 function handleDelete(){
   setText('')
   toast.error('Texto apagado com sucesso!')
 }
+
+
+// Função para adicionar uma linha
+// async function adicionarLinha() {
+//   try {
+//     // Substitua "URL_DA_SUA_ROTA" pela URL real da sua rota
+//     const response = await axios.post("URL_DA_SUA_ROTA/addRow", {
+//       values: ["valor1", "valor2", "valor3"] // Substitua pelos valores que deseja adicionar
+//     });
+
+//     console.log(response.data); // Exibe a resposta do servidor
+//   } catch (error) {
+//     console.error(error); // Trata qualquer erro de requisição
+//   }
+// }
+
+
+
   return(
     <div className="flex justify-center gap-10 items-center">
        <form onSubmit={addEmailHandler} 
@@ -94,7 +114,7 @@ function handleDelete(){
 
     <div className=" flex gap-3 justify-center ">
       <textarea 
-        className="w-[550px] h-96 rounded-md p-5 outline-none shadow-lg border-2 shadow-sky-950 bg-slate-300"
+        className="w-[650px] h-96 rounded-md p-5 outline-none shadow-lg border-2 shadow-sky-950 bg-slate-300"
         value={text}
         onChange={(e)=> setText(e.target.value)}
       ></textarea>
