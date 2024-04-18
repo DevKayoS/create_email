@@ -3,6 +3,7 @@ import { useState,  useEffect, FormEvent} from "react";
 import { Toaster, toast } from "sonner";
 import { ButtonCopy } from "../components/ButtonCopy";
 import { ButtonTrash } from "../components/buttonTrash";
+import axios from "axios";
 // import axios from 'axios';
 
 export function CreateEmail(){
@@ -18,7 +19,7 @@ export function CreateEmail(){
 
 
   function gerarSenhaAleatoria() {
-    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|"<>?';
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|<>?';
     
     const tamanhoSenha = 8;
     
@@ -50,7 +51,14 @@ export function CreateEmail(){
     
     const senhaAleatoria = gerarSenhaAleatoria();
     const newText = `${name};${lastname};${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br;${senhaAleatoria};exchange/basic5gb`
-    
+
+    const fullName = `${name.toUpperCase()} ${lastname.toUpperCase()}`
+    const email = `${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br`
+
+    adicionarLinha(fullName, email, senhaAleatoria)
+  
+    console.log(fullName, email, senhaAleatoria)
+
     
     setText((prevText) => prevText ? `${prevText}\n${newText}` : newText)
     setName('')
@@ -71,18 +79,22 @@ function handleDelete(){
 
 
 // Função para adicionar uma linha
-// async function adicionarLinha() {
-//   try {
-//     // Substitua "URL_DA_SUA_ROTA" pela URL real da sua rota
-//     const response = await axios.post("URL_DA_SUA_ROTA/addRow", {
-//       values: ["valor1", "valor2", "valor3"] // Substitua pelos valores que deseja adicionar
-//     });
+async function adicionarLinha(fullName: string, email: string, password: string) {
+  try {
+    const response = await axios.post("https://api-create-email.onrender.com/addRow", {
+      values: [fullName, email, password]
+    });
 
-//     console.log(response.data); // Exibe a resposta do servidor
-//   } catch (error) {
-//     console.error(error); // Trata qualquer erro de requisição
-//   }
-// }
+    // Verifica se a resposta foi bem-sucedida (status 200)
+    if (response.status === 200) {
+      console.log("Linha adicionada com sucesso:", response.data);
+    } else {
+      console.error("Erro ao adicionar linha:", response.statusText);
+    }
+  } catch (error){
+    console.log(error)
+  }
+}
 
 
 
