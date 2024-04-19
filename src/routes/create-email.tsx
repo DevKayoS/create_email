@@ -4,10 +4,9 @@ import { Toaster, toast } from "sonner";
 import { ButtonCopy } from "../components/ButtonCopy";
 import { ButtonTrash } from "../components/buttonTrash";
 import axios from "axios";
-// import axios from 'axios';
 
 export function CreateEmail(){
-
+  const [fullName, setFullName] = useState("")
   const [name, setName] = useState("")
   const [lastname, setLastname] = useState("")
   const [text, setText] = useState(localStorage.getItem("text") || "")
@@ -52,15 +51,16 @@ export function CreateEmail(){
     const senhaAleatoria = gerarSenhaAleatoria();
     const newText = `${name};${lastname};${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br;${senhaAleatoria};exchange/basic5gb`
 
-    const fullName = `${name.toUpperCase()} ${lastname.toUpperCase()}`
     const email = `${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br`
-
-    adicionarLinha(fullName, email, senhaAleatoria)
+    
+    
+    adicionarLinha(fullName.toUpperCase(), email, senhaAleatoria)
   
     console.log(fullName, email, senhaAleatoria)
 
     
     setText((prevText) => prevText ? `${prevText}\n${newText}` : newText)
+    setFullName('')
     setName('')
     setLastname('')
   
@@ -103,6 +103,13 @@ async function adicionarLinha(fullName: string, email: string, password: string)
        <form onSubmit={addEmailHandler} 
       className="h-80 bg-slate-400/25 rounded-md w-96 flex flex-col items-center justify-center  shadow-lg shadow-sky-950 space-y-10 mt-20  mb-20">
         <div className="flex flex-col space-y-8">
+            <input 
+              type="text" 
+              placeholder="Nome completo" 
+              className="rounded py-2 border-b-2 border-black outline-none px-2" 
+              value={fullName}
+              onChange={(e)=> setFullName(e.target.value)}
+            />
             <input 
               type="text" 
               placeholder="Nome" 
