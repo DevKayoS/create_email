@@ -33,3 +33,11 @@ O texto que fica no textarea é uma auxilio para os colaboradores do ti de infra
 ### ferramentas para Deploy:
   * Vercel;
   * Render;
+
+
+### Documentação da API:
+ ```
+  https://api-create-email.onrender.com/docs
+```
+
+Essa é a minha primeira API que eu fiz sozinho, do 0 até ao deploy!!
