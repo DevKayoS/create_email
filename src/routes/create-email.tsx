@@ -99,9 +99,9 @@ async function adicionarLinha(fullName: string, email: string, password: string)
 
 
   return(
-    <div className="flex justify-center gap-10 items-center">
+    <div className="flex justify-center gap-10 items-center mt-28">
        <form onSubmit={addEmailHandler} 
-      className="h-80 bg-slate-400/25 rounded-md w-96 flex flex-col items-center justify-center  shadow-lg shadow-sky-950 space-y-10 mt-20  mb-20">
+      className="bg-slate-400/25 rounded-md w-96 flex flex-col items-center justify-center p-6  shadow-lg shadow-sky-950 space-y-10 ">
         <div className="flex flex-col space-y-8">
             <input 
               type="text" 

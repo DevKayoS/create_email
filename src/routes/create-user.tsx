@@ -2,7 +2,8 @@ import { Plus } from "lucide-react";
 import { Toaster, toast } from "sonner";
 import { ButtonCopy } from "../components/ButtonCopy";
 import { ButtonTrash } from "../components/buttonTrash";
-import { useState,  useEffect, FormEvent } from "react";
+import { useState,  useEffect } from "react";
+import axios from "axios";
 
 export function CreateUser(){
   // criando os estados
@@ -10,6 +11,7 @@ export function CreateUser(){
   const [lastname, setLastname] = useState("") //estado sobrenome
   const [cpf, setCpf] = useState("") //estado do cpf
   const [textUser, setTextUser] = useState(localStorage.getItem("textUser") || "") //estado para salvar o texto
+  const [path, setPath] = useState("")
   // const textAreaRef = useRef(null)
 
   //usando o useEffect para que só haja alteração quando o text for alterado
@@ -31,19 +33,39 @@ export function CreateUser(){
   }
 
   //função que irá formatar as informações
-  const addUserHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    
-    const password = formatPassword(name, lastname, cpf)
+  const addUserHandler = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
 
-    const newText = `usuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________`
-    
-    setTextUser((prevText) => prevText ? `${prevText}\n${newText}` : newText)
-    setName('')
-    setLastname('')
-    setCpf('')
-  
-  }
+    const password = formatPassword(name, lastname, cpf);
+
+    const formData = {
+      username: `${name} ${lastname}`,
+      password: password,
+      firstName: name,
+      lastName: lastname,
+      email: `${name.toLowerCase()}-${lastname.toLowerCase()}@teste.com`,
+      ou: path,
+    };
+
+    try {
+      const response = await axios.post('https://api-create-user.onrender.com/createUser', formData);
+      console.log('User created successfully:', response.data);
+      toast.success('Usuário criado no AD com sucesso', {
+        description: `${formData.username} foi criado com sucesso`
+      });
+      setTextUser((prevText) =>
+        prevText ? `${prevText}\nusuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________` : `usuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________`
+      );
+      setName('');
+      setLastname('');
+      setCpf('');
+      setPath('')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error('Error creating user:', error.message);
+      toast.error(`Error creating user: ${error.message}`);
+    }
+  };
 
   function copy(){
     navigator.clipboard.writeText(textUser)
@@ -55,9 +77,9 @@ function handleDelete(){
   toast.error('Texto apagado com sucesso!')
 }
   return(
-    <div className="flex justify-center gap-10 items-center">
+    <div className="flex justify-center gap-10 items-center mt-28">
     <form onSubmit={addUserHandler} 
-    className="h-80 bg-slate-400/25 rounded-md w-96 flex flex-col items-center justify-center  shadow-lg shadow-sky-950 space-y-10 mt-20  mb-20">
+    className="bg-slate-400/25 rounded-md w-96 flex flex-col items-center justify-center p-6  shadow-lg shadow-sky-950 space-y-10 ">
      <div className="flex flex-col space-y-8">
          <input 
            type="text" 
@@ -80,10 +102,17 @@ function handleDelete(){
            value={cpf}
            onChange={(e)=> setCpf(e.target.value)}
            />
+           <input 
+           type="text" 
+           placeholder="Pasta" 
+           className="rounded-md py-2 border-b-2 border-black outline-none px-2" 
+           value={path}
+           onChange={(e)=> setPath(e.target.value)}
+           />
    </div>
     <button 
     type="submit" 
-    className="hover:bg-slate-950/60 text-xl px-4 py-2 bg-slate-950/30 rounded-lg text-slate-50/80 shadow-md shadow-black flex items-center justify-center ">
+    className="hover:bg-slate-950/60  text-xl px-4 py-2 bg-slate-950/30 rounded-lg text-slate-50/80 shadow-md shadow-black flex items-center justify-center ">
      <Plus className="size-5"/> Adicionar</button>
  </form>
 
