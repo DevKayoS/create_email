@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import {App} from './app.tsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { CreateEmail } from './routes/create-email.tsx'
+
 import { CreateUser } from './routes/create-user.tsx'
 
 const router = createBrowserRouter([
@@ -12,12 +12,9 @@ const router = createBrowserRouter([
     children:[
       {
         path: "/",
-        element: <CreateEmail/>
-      },
-      {
-        path: "/createuser",
         element: <CreateUser/>
-      }
+      },
+
     ]
 
   }
