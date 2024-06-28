@@ -20,7 +20,8 @@ export function CreateUser(){
   //usando o useEffect para que só haja alteração quando o text for alterado
   useEffect(()=>{
     localStorage.setItem("textUser", textUser)
-  }, [textUser])
+    localStorage.setItem("textEmail", textEmail)
+  }, [textUser, textEmail])
 
   function formatPassword(name: string, lastname: string, cpf: string){
     cpf = cpf.replace(/[-.]/g, "") //removendo os caracteres - ou . do cpf
