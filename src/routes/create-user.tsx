@@ -6,6 +6,7 @@ import { useState,  useEffect } from "react";
 import axios from "axios";
 import { adicionarLinha } from "../helpers/addNewRow";
 import { gerarSenhaAleatoria } from "../helpers/generateRandomPassword";
+import {copy} from '../helpers/copy'
 
 export function CreateUser(){
   // criando os estados
@@ -97,15 +98,6 @@ export function CreateUser(){
     }
   };
 
-  function copyUser(){
-    navigator.clipboard.writeText(textUser)
-    toast.success('Copiado com sucesso!')
-}
-function copyEmail(){
-  navigator.clipboard.writeText(textEmail)
-  toast.success('Copiado com sucesso!')
-}
-
 function handleDeleteUser(){
   setTextUser('')
   toast.error('Texto apagado com sucesso!')
@@ -175,7 +167,7 @@ function handleDeleteEmail(){
    <div className="p-2 mt-5">
      <Toaster richColors/>
        <ButtonTrash onClick={handleDeleteUser}/>
-       <ButtonCopy onClick={copyUser}/>
+       <ButtonCopy onClick={()=> copy(textUser)}/>
    </div>
   </div>
   <div className="flex gap-3">
@@ -191,7 +183,7 @@ function handleDeleteEmail(){
    <div className="p-2 mt-5">
      <Toaster richColors/>
        <ButtonTrash onClick={handleDeleteEmail}/>
-       <ButtonCopy onClick={copyEmail}/>
+       <ButtonCopy onClick={()=> copy(textEmail)}/>
    </div>
   </div>
  </div>

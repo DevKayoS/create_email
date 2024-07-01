@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function adicionarLinha(fullName: string, email: string, password: string) {
   try {
-    const response = await axios.post("https://api-create-email.onrender.com/addRow", {
+    const response = await axios.post("http://192.168.2.61:3001/addRow", {
       values: [fullName, email, password]
     });
 
