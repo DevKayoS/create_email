@@ -53,16 +53,11 @@ export function CreateUser(){
   const addUserHandler = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
-
     const senhaAleatoria = gerarSenhaAleatoria();
     const newText = `${name};${lastname};${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br;${senhaAleatoria};exchange/basic5gb`
 
     const email = `${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br`
     
-    
-    adicionarLinha(fullName.toUpperCase(), email, senhaAleatoria)
-
-
     const password = formatPassword(name, lastname, cpf);
 
     const formData = {
@@ -80,6 +75,10 @@ export function CreateUser(){
       toast.success('Usuário criado no AD com sucesso', {
         description: `${formData.username} foi criado com sucesso`
       });
+      if(response){
+        adicionarLinha(fullName.toUpperCase(), email, senhaAleatoria)
+      }
+      
       setTextUser((prevText) =>
         prevText ? `${prevText}\nusuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________` : `usuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________`
       );
