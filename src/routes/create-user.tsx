@@ -35,6 +35,18 @@ export function CreateUser(){
 
     return userPassword
   }
+  const teste: string[] = [
+    'eu',
+    'teste',
+    'vc',
+    'nos',
+    'bota',
+    'ta pensando oq'
+  ]
+
+  teste.map((word)=> (
+    console.log(word)
+  ))
 
   //função que irá formatar as informações
   const addUserHandler = async (e: { preventDefault: () => void; }) => {
@@ -57,7 +69,7 @@ export function CreateUser(){
       password: password,
       firstName: name,
       lastName: lastname,
-      email: `${name.toLowerCase()}-${lastname.toLowerCase()}@teste.com`,
+      email: `${name.toLowerCase()}-${lastname.toLowerCase()}@grupoamp.com.br`,
       ou: path,
     };
 
@@ -70,10 +82,7 @@ export function CreateUser(){
       setTextUser((prevText) =>
         prevText ? `${prevText}\nusuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________` : `usuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________`
       );
-
-
-      setTextEmail((prevText) => prevText ? `${prevText}\n${newText}` : newText)
-
+     setTextEmail((prevText) => prevText ? `${prevText}\n${newText}` : newText)
       setFullName('')
       setName('');
       setLastname('');
@@ -82,7 +91,9 @@ export function CreateUser(){
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Erro ao criar usuário:', error.message);
-      toast.error(`Erro ao criar usuário: ${error.message}`);
+      toast.error(`Erro ao criar usuário`,{
+        description:  `O usuário  já existe ou contate o provedor para ver mais detalhes!`
+      });
     }
   };
 
