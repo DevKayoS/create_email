@@ -92,8 +92,8 @@ export function CreateUser(){
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Erro ao criar usuário:', error.message);
-      toast.error(`Erro ao criar usuário`,{
-        description:  `O usuário  já existe ou contate o provedor para ver mais detalhes!`
+      toast.error(`Erro ao criar o usuário ${formData.username}`,{
+        description:  `O usuário já existe, tente novamente mais tarde! `
       });
     }
   };
