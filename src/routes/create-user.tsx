@@ -7,6 +7,8 @@ import axios from "axios";
 import { adicionarLinha } from "../helpers/addNewRow";
 import { gerarSenhaAleatoria } from "../helpers/generateRandomPassword";
 import {copy} from '../helpers/copy'
+import Select, { SingleValue } from 'react-select'
+import  {Store} from '../helpers/storeList'
 
 export function CreateUser(){
   // criando os estados
@@ -16,8 +18,8 @@ export function CreateUser(){
   const [cpf, setCpf] = useState("") //estado do cpf
   const [textUser, setTextUser] = useState(localStorage.getItem("textUser") || "") //estado para salvar o texto
   const [textEmail, setTextEmail] = useState(localStorage.getItem("textEmail") || "")
-
-  const [path, setPath] = useState("")
+  const [path, setPath] = useState<string | null>(null)
+  
   //usando o useEffect para que só haja alteração quando o text for alterado
   useEffect(()=>{
     localStorage.setItem("textUser", textUser)
@@ -87,7 +89,7 @@ export function CreateUser(){
       setName('');
       setLastname('');
       setCpf('');
-      setPath('')
+      setPath(null)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Erro ao criar usuário:', error.message);
@@ -105,6 +107,19 @@ function handleDeleteEmail(){
   setTextEmail('')
   toast.error('Texto apagado com sucesso!')
 }
+// criando uma lista para o select
+const options = Store.map((store) => ({ value: store, label: store }));
+
+
+type OptionType = {
+  value: string,
+  label: string
+}
+function handleChange(selectedOption: SingleValue<OptionType>){
+  setPath(selectedOption ? selectedOption.value : null);
+}
+
+
   return(
     <div className="flex  justify-center gap-10 items-center mt-12">
     <form onSubmit={addUserHandler} 
@@ -138,13 +153,12 @@ function handleDeleteEmail(){
            value={cpf}
            onChange={(e)=> setCpf(e.target.value)}
            />
-           <input 
-           type="text" 
-           placeholder="Pasta" 
-           className="rounded-md py-2 border-b-2 border-black outline-none px-2" 
-           value={path}
-           onChange={(e)=> setPath(e.target.value)}
-           />
+
+          <Select 
+            defaultValue={path ? {value: path, label: path}: null} 
+            onChange={handleChange} 
+            options={options} 
+          />
    </div>
     <button 
     type="submit" 
