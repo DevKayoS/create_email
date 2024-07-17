@@ -73,11 +73,11 @@ export function CreateUser(){
         description: `${formData.username} foi criado com sucesso`
       });
       if(response){
-        adicionarLinha(fullName.toUpperCase(), email, senhaAleatoria)
+        adicionarLinha(fullName.toUpperCase(), formatInput(email), senhaAleatoria)
       }
       
       setTextUser((prevText) =>
-        prevText ? `${prevText}\nusuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________` : `usuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________`
+        prevText ? `${prevText}\nusuário: ${formatedName.toLowerCase()}-${formatedLastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________` : `usuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________`
       );
      setTextEmail((prevText) => prevText ? `${prevText}\n${newText}` : newText)
       setFullName('')
