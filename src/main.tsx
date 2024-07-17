@@ -5,6 +5,7 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import { CreateUser } from './routes/create-user.tsx'
+import { CreateEmail } from './routes/create-email.tsx'
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <CreateUser/>
       },
+      {
+        path: "/createEmail",
+        element: <CreateEmail/>
+      }
 
     ]
 

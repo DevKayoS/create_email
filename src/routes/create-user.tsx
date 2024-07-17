@@ -9,6 +9,7 @@ import { gerarSenhaAleatoria } from "../helpers/generateRandomPassword";
 import {copy} from '../helpers/copy'
 import Select, { SingleValue } from 'react-select'
 import  {Store} from '../helpers/storeList'
+import { formatInput } from "../helpers/formatInput";
 
 export function CreateUser(){
   // criando os estados
@@ -19,6 +20,7 @@ export function CreateUser(){
   const [textUser, setTextUser] = useState(localStorage.getItem("textUser") || "") //estado para salvar o texto
   const [textEmail, setTextEmail] = useState(localStorage.getItem("textEmail") || "")
   const [path, setPath] = useState<string | null>(null)
+
   
   //usando o useEffect para que só haja alteração quando o text for alterado
   useEffect(()=>{
@@ -38,38 +40,31 @@ export function CreateUser(){
 
     return userPassword
   }
-  const teste: string[] = [
-    'eu',
-    'teste',
-    'vc',
-    'nos',
-    'bota',
-    'ta pensando oq'
-  ]
-
-  teste.map((word)=> (
-    console.log(word)
-  ))
 
   //função que irá formatar as informações
   const addUserHandler = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     const senhaAleatoria = gerarSenhaAleatoria();
-    const newText = `${name};${lastname};${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br;${senhaAleatoria};exchange/basic5gb`
-
-    const email = `${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br`
     
-    const password = formatPassword(name, lastname, cpf);
-
+    
+    const formatedName = formatInput(name)
+    const formatedLastname = formatInput(lastname)
+    
+    const email = formatInput(`${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br`)
+    const password = formatPassword(formatedName, formatedLastname, cpf);
+    const newText = `${formatedName};${formatedLastname};${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br;${senhaAleatoria};exchange/basic5gb`
+    
     const formData = {
-      username: `${name} ${lastname}`,
-      password: password,
-      firstName: name,
-      lastName: lastname,
-      email: `${name.toLowerCase()}-${lastname.toLowerCase()}@grupoamp.com.br`,
+      username: `${formatedName} ${formatedLastname}`,
+      password: formatInput(password),
+      firstName: formatedName,
+      lastName: formatedLastname,
+      email: email,
       ou: path,
     };
+
+    console.log(formData)
 
     try {
       const response = await axios.post('http://192.168.2.61:3000/createUser', formData);
@@ -94,7 +89,7 @@ export function CreateUser(){
     } catch (error: any) {
       console.error('Erro ao criar usuário:', error.message);
       toast.error(`Erro ao criar o usuário ${formData.username}`,{
-        description:  `O usuário já existe, tente novamente mais tarde! `
+        description:  error.message
       });
     }
   };

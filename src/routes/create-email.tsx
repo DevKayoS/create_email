@@ -3,7 +3,8 @@ import { useState,  useEffect, FormEvent} from "react";
 import { Toaster, toast } from "sonner";
 import { ButtonCopy } from "../components/ButtonCopy";
 import { ButtonTrash } from "../components/buttonTrash";
-import axios from "axios";
+import { adicionarLinha } from "../helpers/addNewRow";
+import { gerarSenhaAleatoria } from "../helpers/generateRandomPassword";
 
 export function CreateEmail(){
   const [fullName, setFullName] = useState("")
@@ -15,35 +16,6 @@ export function CreateEmail(){
   useEffect(()=>{
     localStorage.setItem("text", text)
   }, [text])
-
-
-  function gerarSenhaAleatoria() {
-    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|<>?';
-    
-    const tamanhoSenha = 8;
-    
-    let senha = '';
-  
-    for (let i = 0; i < tamanhoSenha; i++) {
-      const indiceAleatorio = Math.floor(Math.random() * caracteres.length);
-      senha += caracteres.charAt(indiceAleatorio);
-    }
-
-    const haveUpperCase = /[A-Z]/.test(senha)
-    const haveLowerCase = /[a-z]/.test(senha)
-    const haverNumber = /[0-9]/.test(senha)
-    const haveSymbols = /[^A-Za-z0-9]/.test(senha)
-
-    if (haveUpperCase && haveLowerCase && haverNumber && haveSymbols ){
-      return senha
-    } else {
-      return gerarSenhaAleatoria()
-    }
-    
-  }
-  
-  // Salvando a senha gerada em uma variável.
-  
 
   const addEmailHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -77,31 +49,10 @@ function handleDelete(){
   toast.error('Texto apagado com sucesso!')
 }
 
-
-// Função para adicionar uma linha
-async function adicionarLinha(fullName: string, email: string, password: string) {
-  try {
-    const response = await axios.post("https://api-create-email.onrender.com/addRow", {
-      values: [fullName, email, password]
-    });
-
-    // Verifica se a resposta foi bem-sucedida (status 200)
-    if (response.status === 200) {
-      console.log("Linha adicionada com sucesso:", response.data);
-    } else {
-      console.error("Erro ao adicionar linha:", response.statusText);
-    }
-  } catch (error){
-    console.log(error)
-  }
-}
-
-
-
   return(
     <div className="flex justify-center gap-10 items-center mt-28">
        <form onSubmit={addEmailHandler} 
-      className="bg-slate-400/25 rounded-md w-96 flex flex-col items-center justify-center p-6  shadow-lg shadow-sky-950 space-y-10 ">
+      className="bg-slate-400/25 rounded-md w-96 flex flex-col items-center justify-center p-6 shadow-xl shadow-black  space-y-10 ">
         <div className="flex flex-col space-y-8">
             <input 
               type="text" 
