@@ -86,10 +86,16 @@ export function CreateUser(){
       setPath(null)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.error('Erro ao criar usuário:', error.message);
-      toast.error(`Erro ao criar o usuário ${formData.username}`,{
-        description:  error.message
-      });
+        let errorMessage = 'Erro desconhecido ao criar o usuário';
+    if (error.response && error.response.data && error.response.data.message) {
+      errorMessage = error.response.data.message;
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+
+  toast.error(`Erro ao criar o usuário ${formData.username}`, {
+    description: errorMessage
+  });
     }
   };
 
