@@ -53,7 +53,7 @@ export function CreateUser(){
     
     const email = formatInput(`${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br`)
     const password = formatPassword(formatedName, formatedLastname, cpf);
-    const newText = `${formatedName};${formatedLastname};${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br;${senhaAleatoria};exchange/basic5gb`
+    const newText = `${formatedName};${formatedLastname};${name.toLocaleLowerCase()}-${formatedLastname.toLocaleLowerCase()}@grupoamp.com.br;${senhaAleatoria};exchange/basic5gb`
     
     const formData = {
       username: `${formatedName} ${formatedLastname}`,
@@ -86,6 +86,7 @@ export function CreateUser(){
       setPath(null)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      console.log('Erro ao criar usuário:', error.message)
         let errorMessage = 'Erro desconhecido ao criar o usuário';
     if (error.response && error.response.data && error.response.data.message) {
       errorMessage = error.response.data.message;
@@ -93,9 +94,9 @@ export function CreateUser(){
       errorMessage = error.message;
     }
 
-  toast.error(`Erro ao criar o usuário ${formData.username}`, {
-    description: errorMessage
-  });
+      toast.error(`Erro ao criar o usuário ${formData.username}`, {
+        description: errorMessage
+      });
     }
   };
 
