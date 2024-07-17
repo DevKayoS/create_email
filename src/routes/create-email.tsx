@@ -5,6 +5,7 @@ import { ButtonCopy } from "../components/ButtonCopy";
 import { ButtonTrash } from "../components/buttonTrash";
 import { adicionarLinha } from "../helpers/addNewRow";
 import { gerarSenhaAleatoria } from "../helpers/generateRandomPassword";
+import { formatInput } from "../helpers/formatInput";
 
 export function CreateEmail(){
   const [fullName, setFullName] = useState("")
@@ -19,11 +20,13 @@ export function CreateEmail(){
 
   const addEmailHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    
+    const formatedName = formatInput(name)
+    const formatedLastName = formatInput(lastname)
     const senhaAleatoria = gerarSenhaAleatoria();
-    const newText = `${name};${lastname};${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br;${senhaAleatoria};exchange/basic5gb`
+    
+    const newText = `${formatedName};${formatedLastName};${formatedName.toLocaleLowerCase()}-${formatedLastName.toLocaleLowerCase()}@grupoamp.com.br;${senhaAleatoria};exchange/basic5gb`
 
-    const email = `${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br`
+    const email = `${formatedName.toLocaleLowerCase()}-${formatedLastName.toLocaleLowerCase()}@grupoamp.com.br`
     
     
     adicionarLinha(fullName.toUpperCase(), email, senhaAleatoria)
