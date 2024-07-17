@@ -76,7 +76,7 @@ export function CreateUser(){
       }
       
       setTextUser((prevText) =>
-        prevText ? `${prevText}\nusuário: ${formatedName.toLowerCase()}-${formatedLastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________` : `usuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________`
+        prevText ? `${prevText}\nusuário: ${formatedName.toLowerCase()}-${formatedLastname.toLowerCase()}\nemail: ${formatedName.toLocaleLowerCase()}-${formatedLastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________` : `usuário: ${name.toLowerCase()}-${lastname.toLowerCase()}\nemail: ${name.toLocaleLowerCase()}-${lastname.toLocaleLowerCase()}@grupoamp.com.br\nsenha: ${password}\nramal: (em desenvolvimento)\n ______________`
       );
      setTextEmail((prevText) => prevText ? `${prevText}\n${newText}` : newText)
       setFullName('')
