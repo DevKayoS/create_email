@@ -68,7 +68,6 @@ export function CreateUser(){
 
     try {
       const response = await axios.post('http://192.168.2.61:3000/createUser', formData);
-      console.log('User created successfully:', response.data);
       toast.success('Usuário criado no AD com sucesso', {
         description: `${formData.username} foi criado com sucesso`
       });
